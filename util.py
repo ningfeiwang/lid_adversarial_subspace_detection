@@ -483,6 +483,7 @@ def get_lids_random_batch(model, X, X_noisy, X_adv, dataset, k=10, batch_size=10
     # get deep representations
     funcs = [K.function([model.layers[0].input, K.learning_phase()], [out])
                  for out in get_layer_wise_activations(model, dataset)]
+    funcs[0] = K.function([model.layers[0].input, K.learning_phase()], [tf.identity(model.layers[0].input)])
     lid_dim = len(funcs)
     print("Number of layers to estimate: ", lid_dim)
 
